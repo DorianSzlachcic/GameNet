@@ -1,0 +1,164 @@
+{% include 'head.html' %}
+{% include 'navbar.html' %}
+
+    <!--News slider-->
+    <section class="bg-dark">
+        <div class="container-lg p-0">
+            <div id="carouselExampleCaptions" class="carousel slide " data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                  <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"></button>
+                  <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"></button>
+                  <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"></button>
+                </div>
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                      <a href="#" class="text-reset text-decoration-none">
+                        <img src="https://sm.ign.com/t/ign_pl/screenshot/1/16-rocket-/16-rocket-leaguebrbrrocket-leagues-ridiculous-and-addicting_dguy.1280.jpg" class="d-block w-100" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                          <h5>First News</h5>
+                          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti adipisci, distinctio amet commodi modi mollitia.</p>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="carousel-item">
+                      <a href="#" class="text-reset text-decoration-none">
+                        <img src="https://data1.origin.com/asset/content/dam/originx/web/app/programs/origin-access/OA-DAI-1920x1080.jpg/55d0af77-08ff-4a7b-9063-c83ba97e3531/original.jpg" class="d-block w-100" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                          <h5>Second News</h5>
+                          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti adipisci, distinctio amet commodi modi mollitia.</p>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="carousel-item">
+                    <a href="#" class="text-reset text-decoration-none">
+                        <img src="https://i0.wp.com/loadingxp.com/wp-content/uploads/2018/12/GOW_LaunchScreen9.max-1920x1200.jpegquality-90.jpg?fit=1920%2C1080&ssl=1" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                      <h5>Third News</h5>
+                      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti adipisci, distinctio amet commodi modi mollitia.</p>
+                    </a>
+                    </div>
+                  </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                  <span class="carousel-control-next-icon"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+        </div>
+    </section>
+
+    <!--Top5 section-->
+    <section class="my-4" id="top5">
+        <div class="container">
+            <h2>Top 5 gier</h2>
+
+            <div class="row">
+                {% for game in top5 %}
+                    {% if game.0 %}
+                    <div class="col-lg my-2">
+                        <a href="{% url 'game' id=game.0.id %}" class="text-reset text-decoration-none">
+                            <div class="card">
+                                <div class="card-image">
+                                    <img src="{% if game.0.image %} {{ game.0.image.url }} {% elif game.0.image_link %} {{game.0.image_link}} {% else %} - {% endif %}" class="card-img-top img-fluid" alt="">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">#{{forloop.counter}}</h5>
+                                    <div >{{game.0.title}} 
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {% else %} 
+                    <div class="col-lg my-2">
+                        <a href="#" class="text-reset text-decoration-none">
+                            <div class="card">
+                                <div class="card-image">
+                                    <img src="https://assets.reedpopcdn.com/elden_ring_krytykowane_przez_tworcow_z_ubisoftu_i_guerilla_games_headline.jpg/BROK/thumbnail/1200x900/quality/100/elden_ring_krytykowane_przez_tworcow_z_ubisoftu_i_guerilla_games_headline.jpg" class="card-img-top img-fluid" alt="">
+                                </div> 
+                                <div class="card-body">
+                                    <h5 class="card-title">#{{forloop.counter}}</h5>
+                                    <div><span class="text-muted">Zabrakło nam gier</span></div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>                    
+                    {% endif %}
+                {% endfor %}
+                
+            </div>
+        </div>
+    </section>
+
+    <!--Reviews section-->
+    <section>
+        <div class="container">
+            <h2 class="mb-4">Recenzje</h2>
+            <div class="row">
+                <div class="col mb-4">
+                    <a href="#" class="text-reset text-decoration-none">
+                        <div class="card">
+                            <div class="row">
+                                <div class="col-4">
+                                    <img src="https://bigbaddice.pl/wp-content/uploads/2022/03/elden-ring-otwarte-swiaty.jpg" alt="" class="img-fluid rounded-start">
+                                </div>
+                                <div class="col">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Świetna recenzja</h5>
+                                        <p class="card-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis numquam delectus earum distinctio incidunt aliquid adipisci repellendus velit ratione maxime ea quod commodi, dolores id, voluptates et necessitatibus asperiores iusto.</p>
+                                        <p class="card-text"><small class="text-muted">Autor: XYZ</small></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col mb-4">
+                    <a href="#" class="text-reset text-decoration-none">
+                        <div class="card">
+                            <div class="row">
+                                <div class="col-4">
+                                    <img src="https://bigbaddice.pl/wp-content/uploads/2022/03/elden-ring-otwarte-swiaty.jpg" alt="" class="img-fluid rounded-start">
+                                </div>
+                                <div class="col">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Świetna recenzja</h5>
+                                        <p class="card-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis numquam delectus earum distinctio incidunt aliquid adipisci repellendus velit ratione maxime ea quod commodi, dolores id, voluptates et necessitatibus asperiores iusto.</p>
+                                        <p class="card-text"><small class="text-muted">Autor: XYZ</small></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col mb-4">
+                    <a href="#" class="text-reset text-decoration-none">
+                        <div class="card">
+                            <div class="row">
+                                <div class="col-4">
+                                    <img src="https://bigbaddice.pl/wp-content/uploads/2022/03/elden-ring-otwarte-swiaty.jpg" alt="" class="img-fluid rounded-start">
+                                </div>
+                                <div class="col">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Świetna recenzja</h5>
+                                        <p class="card-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis numquam delectus earum distinctio incidunt aliquid adipisci repellendus velit ratione maxime ea quod commodi, dolores id, voluptates et necessitatibus asperiores iusto.</p>
+                                        <p class="card-text"><small class="text-muted">Autor: XYZ</small></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% include 'footer.html' %}

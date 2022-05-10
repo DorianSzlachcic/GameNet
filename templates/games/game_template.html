@@ -1,0 +1,102 @@
+{% include '../head.html' %}
+{% include '../navbar.html' %}
+
+<section class="bg-light">
+    <div class="container border rounded my-3">
+        <div class="row m-4 text-center">
+            <h1> {{game.title}} </h1>
+        </div>
+        <div class="row my-3">
+            <div class="col mx-4 game-img d-flex justify-content-center">
+                {% if game.image %}
+                <img src="{{ game.image.url }}" alt="Game image" class="img-fluid rounded"/>
+                {% elif game.image_link %}
+                <img src="{{ game.image_link }}" alt="Game image" class="img-fluid rounded"/>
+                {% else %}
+                ----
+                {% endif %}
+            </div>
+            <div class="col text-end">
+                <p>
+                    {{game.description}}
+                </p>
+                <p>
+                    <b>Developer: </b> {{game.developer}}
+                </p>
+                <p>
+                    <b>Data wydania: </b> {% if release_date %} {{release_date}} {% else %} - {% endif %}
+                </p>
+            </div>
+            <div class="col">
+                <div class="card mx-2">
+                    <div class="card-body">
+                        <h5 class="card-title">Średnia ocen graczy</h5>
+                        <a href="#ratings" class="text-reset text-decoration-none">
+                        <div class="col-2 fs-2 mt-3 bg-{% if avg.stars__avg <= 2.5 %}danger{% elif avg.stars__avg < 4.0 %}warning{% else %}success{% endif %} rounded text-light d-flex justify-content-center">
+                            <div class="mx-2">{% if avg %}{{avg.stars__avg}}{% else %}-{% endif %}</div>
+                        </div>
+                        <p class="card-text m-1">{% if ratings %}z {{ratings.count}} opinii użytkowników{% else %}brak opinii na temat gry{% endif %}</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% if trailer_id %}
+
+<div class="container">
+    <h2 class="my-2">Trailer</h2>
+    <div class="d-flex justify-content-center border rounded p-0 my-1">
+        <div class="p-5 my-3 w-50 border ratio ratio-16x9">
+            <iframe
+            src="https://www.youtube.com/embed/{{trailer_id}}">
+            </iframe> 
+        </div>
+    </div>
+</div>
+
+
+{% endif %}
+
+
+<section id="ratings" class="bg-light">
+    <div class="container">
+        <h2 class="my-2" >Oceny i opinie</h2>
+        {% if ratings %}
+            {% for rating in ratings %}
+            <div class="card my-3">
+                <div class="card-header">Autor: {{rating.author.username}}</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            {% if rating.description %}
+                                {{rating.description}}
+                            {% else %}
+                                <span class="text-muted">Brak opisu</span>
+                            {% endif %}
+                        </div>
+                        <div class="col d-flex justify-content-center border-start">
+                            Ocena: 
+                            <div class="mx-2 bg-{% if rating.stars <= 2.5 %}danger{% elif rating.stars < 4.0 %}warning{% else %}success{% endif %} rounded text-light">
+                                <div class="mx-2">{{rating.stars}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="card">
+                <div class="card-body text-muted">
+                    Brak opinii na temat tej gry
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+
+{% include '../footer.html' %}

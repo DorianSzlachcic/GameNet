@@ -1,0 +1,35 @@
+{% include '../head.html' %}
+{% include '../navbar.html' %}
+{% load crispy_forms_tags %}
+
+<div class="container-sm mt-5">
+    <h2 class="text-center mb-5">Logowanie</h2>
+    <div class="row d-flex justify-content-center">
+        <div class="col-7">
+            <form method="POST" action="">
+                {% csrf_token %}
+                
+                <div class="row mb-4">
+                    <label for="id_username">Nazwa użytkownika</label>
+                    {{form.username|as_crispy_field}}
+                </div>
+                <div class="row mb-4">
+                    <label for="id_password">Hasło</label>
+                    {{form.password|as_crispy_field}}
+                </div>
+                <div class="row mx-auto">
+                    <button class="btn btn-primary btn-lg" type="submit">Zaloguj się</button>
+                </div>
+                
+            </form>
+            <p class="text-center my-3">Nie masz konta? <a href="{% url 'register' %}">Załóż je tutaj</a></p>
+            {% for message in messages%}
+                <p class="alert alert-{{message.tags}} d-flex align-items-center mt-5" role="alert">
+                    <span class="mx-auto fs-5">{{message}}</span>
+                </p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% include '../footer.html' %}
