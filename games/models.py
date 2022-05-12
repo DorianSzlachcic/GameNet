@@ -1,4 +1,5 @@
 from distutils.command.upload import upload
+from click import edit
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -22,6 +23,8 @@ class Rating(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     stars = models.PositiveSmallIntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(5)])
     description = models.TextField(max_length=256, help_text="Twoja opinia", null=True, blank=True)
+    created_date = models.DateTimeField(auto_now_add=True)
+    edit_date = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
         return self.author.username + " - " + self.game.title

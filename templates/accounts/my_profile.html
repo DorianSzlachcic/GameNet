@@ -1,0 +1,50 @@
+{% include '../head.html' %}
+{% include '../navbar.html' %}
+
+
+<section>
+    <div class="container">
+        <h2 class="my-4">Witaj {{request.user.username}}!</h2>
+        <div class="row">
+            <div class="col-lg-2 border-end">
+                <h3 class="my-2 fs-4">Akcje konta</h3>
+                <div class="btn-group-vertical">
+                    <a href="#" class="btn btn-secondary btn-block">Zmień hasło</a>
+                    <a href="#" class="btn btn-danger btn-block">Usuń konto</a>
+                </div>
+            </div>
+            <div class="col-lg">
+                <h3 class="m-2 mb-4 fs-4">Twoje opinie</h3>
+                {% if user_ratings %}
+                {% for rating,last in user_ratings %}
+                    <div class="card my-2">
+                        <div class="card-body">
+                            <div class="row">
+                                <h4 class="pb-3 fs-5 border-bottom">{{rating.game.title}}</h4>
+                                <div class="col-md border-end">
+                                    <p>{% if rating.description %} {{rating.description}} {% else%} <span class="text-muted">Brak opnii</span> {% endif %}</p>
+                                    <span class="text-muted">Ostatnio zmodyfikowane: {{last}}</span>
+                                </div>
+                                <div class="col-md text-center">
+                                    <a href="{% url 'editRating' id=rating.id %}" class="btn btn-secondary mx-2 mt-3">Edytuj</a>
+                                    <a href="{% url 'deleteRating' id=rating.id %}" class="btn btn-danger mt-3">Usuń opinię</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                {% else %}
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="pb-3 fs-5 border-bottom">Brak opinii</h4>
+                            <p class="card-text text-muted">Dodawaj opinie na stronach gier</p>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% include '../footer.html' %}

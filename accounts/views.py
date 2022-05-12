@@ -14,6 +14,9 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User
 from django.db.models import Avg
 
+from babel.dates import format_datetime
+
+
 from games.models import Rating, Game
 from .forms import RegisterForm
 from accounts.tokens import TokenGenerator
@@ -36,7 +39,12 @@ def homePage(request):
     context = {'top5': top5}
     return render(request, "home.html", context)
 
+
+
 def loginPage(request):
+    if request.user.is_authenticated:
+        return redirect('home')
+
     form = AuthenticationForm()
 
     if request.method == 'POST':
@@ -53,12 +61,20 @@ def loginPage(request):
     context = {'form': form}
     return render(request, "accounts/login.html", context)
 
+
+
 def logoutUser(request):
     logout(request)
     messages.success(request,"Wylogowano pomyślnie.",extra_tags="success")
     return redirect('login')
 
+
+
+
 def registerPage(request):
+    if request.user.is_authenticated:
+        return redirect('home')
+
     form = RegisterForm()
 
     if request.method == 'POST':
@@ -86,6 +102,22 @@ def registerPage(request):
 
     context = {'form': form}
     return render(request, "accounts/register.html", context)
+
+
+
+def profilePage(request):
+
+    user_ratings = Rating.objects.filter(author=request.user)
+    
+    last_edit_dates = Rating.objects.filter(author = request.user).values_list("edit_date",flat=True)
+    last_edit_formated = []
+
+    for last in last_edit_dates:
+        last_edit_formated.append(format_datetime(last, locale="pl_PL"))
+
+    context = {'user_ratings': zip(user_ratings,last_edit_formated) if user_ratings else None }
+    return render(request, "accounts/my_profile.html", context)
+
 
 def activate(request, uidb64, token):
     try:
