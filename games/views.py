@@ -47,6 +47,7 @@ def game_site(request, id):
     context = {
         'game': game, 
         'ratings': zip(ratings,last_edit_formated) if ratings else None, 
+        'ratings_count': ratings.count() if ratings else None,
         'avg': avg, 
         'release_date': format_date(game.release_date, locale="pl_PL"), 
         'trailer_id': trailer_id,
@@ -76,3 +77,9 @@ def editRating(request, id):
 
     context = {'form': form, 'game_title': rating.game.title}
     return render(request, "games/edit_rating.html", context)
+
+def search(request):
+    if request.method == "POST":
+        searched_games = Game.objects.filter(title__contains = request.POST.get('search'))
+    context = {'searched_games': searched_games}
+    return render(request, "games/search.html",context)

@@ -26,7 +26,8 @@
     <!--Search input-->
     <nav class="navbar navbar-expand-md bg-dark navbar-dark">
         <div class="container">
-            <form class="input-group mb-3" method="GET">
+            <form class="input-group mb-3" method="POST" action="{% url 'search' %}">
+                {% csrf_token %}
                 <input type="text" class="form-control" name="search" placeholder="Mario, Portal 2, Elden Ring...">
                 <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="bi bi-search"></i></button>
             </form>

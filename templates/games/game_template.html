@@ -35,7 +35,7 @@
                         <div class="col-2 fs-2 mt-3 bg-{% if avg.stars__avg <= 2.5 %}danger{% elif avg.stars__avg < 4.0 %}warning{% else %}success{% endif %} rounded text-light d-flex justify-content-center">
                             <div class="mx-2">{% if avg %}{{avg.stars__avg}}{% else %}-{% endif %}</div>
                         </div>
-                        <p class="card-text m-1">{% if ratings %}z {{ratings.count}} opinii użytkowników{% else %}brak opinii na temat gry{% endif %}</p>
+                        <p class="card-text m-1">{% if ratings_count %}z {{ratings_count}} opinii użytkowników{% else %}brak opinii na temat gry{% endif %}</p>
                         </a>
                     </div>
                 </div>
@@ -117,7 +117,7 @@
             </div>
             {% endfor %}
         {% else %}
-            <div class="card">
+            <div class="card my-3">
                 <div class="card-body text-muted">
                     Brak opinii na temat tej gry
                 </div>
