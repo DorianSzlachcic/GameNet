@@ -1,0 +1,5 @@
+Witaj {{ user.username }}!
+
+Naciśnij link aby aktywować konto GameNet:
+
+http://{{ domain }}{% url 'activate' uidb64=uid token=token %}

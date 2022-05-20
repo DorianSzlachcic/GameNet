@@ -93,7 +93,7 @@
         {% if ratings %}
             {% for rating,last in ratings %}
             <div class="card my-3">
-                <div class="card-header">Autor: {{rating.author.username}}</div>
+                <div class="card-header">Autor: {% if rating.author %}{{rating.author.username}}{% else %}<span class="text-muted">[Konto usunięto]</span>{% endif %}</div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col">

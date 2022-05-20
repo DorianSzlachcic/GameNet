@@ -19,7 +19,7 @@ class Game(models.Model):
         return self.title + " - " + self.developer
 
 class Rating(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, null=True, blank=True, default=None, on_delete=models.CASCADE)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     stars = models.PositiveSmallIntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(5)])
     description = models.TextField(max_length=256, help_text="Twoja opinia", null=True, blank=True)
@@ -27,4 +27,4 @@ class Rating(models.Model):
     edit_date = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
-        return self.author.username + " - " + self.game.title
+        return self.game.title

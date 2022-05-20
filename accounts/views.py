@@ -13,6 +13,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User
 from django.db.models import Avg
+from django.contrib.auth.decorators import login_required
 
 from babel.dates import format_datetime
 
@@ -88,14 +89,27 @@ def registerPage(request):
             user.save()
 
             token_generator = TokenGenerator()
-            message = render_to_string('accounts/activation_email.html', {
+            message_txt = render_to_string('accounts/activation_email.txt', {
                 'user': user,
                 'domain': get_current_site(request).domain,
                 'uid':urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': token_generator.make_token(user),
             })
 
-            send_mail("Link aktywacyjny - GameNet", message, settings.EMAIL_HOST_USER, [form.cleaned_data.get('email')],fail_silently=False)
+            message_html = render_to_string('accounts/activation_email.html', {
+                'user': user,
+                'domain': get_current_site(request).domain,
+                'uid':urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': token_generator.make_token(user),
+            })
+
+            send_mail("Link aktywacyjny - GameNet", 
+                message_txt, 
+                settings.EMAIL_HOST_USER, 
+                [form.cleaned_data.get('email')],
+                fail_silently=False, 
+                html_message=message_html
+            )
 
             messages.success(request, "Na podanego maila został wysłany link aktywacyjny. Przed zalogowaniem prosze aktywować konto.", extra_tags="success")
             return redirect('login')
@@ -104,7 +118,7 @@ def registerPage(request):
     return render(request, "accounts/register.html", context)
 
 
-
+@login_required
 def profilePage(request):
 
     user_ratings = Rating.objects.filter(author=request.user)
@@ -134,5 +148,14 @@ def activate(request, uidb64, token):
         return redirect('home')
     else:
         messages.error(request,"Nie udało się aktywować konta.",extra_tags="danger")
-        redirect('login')
+        return redirect('login')
 
+@login_required
+def deleteAccount(request):
+    account = request.user
+
+    logout(request)
+    account.delete()
+
+    messages.error(request,"Usunięto konto",extra_tags="danger")
+    return redirect('login')

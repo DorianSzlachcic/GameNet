@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
+from .email import EmailConfig
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -109,8 +110,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'here_goes_email@gmail.com'
-EMAIL_HOST_PASSWORD = "here_goes_password"
+EMAIL_HOST_USER = EmailConfig.email_user
+EMAIL_HOST_PASSWORD = EmailConfig.email_password
 EMAIL_PORT = 587
 
 #Media
