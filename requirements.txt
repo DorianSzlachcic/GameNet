@@ -1,0 +1,7 @@
+Babel==2.10.1
+Django==4.0.4
+django-crispy-forms==1.14.0
+whitenoise==6.1.0
+django-storages[azure]
+azure-storage-blob
+azure-identity

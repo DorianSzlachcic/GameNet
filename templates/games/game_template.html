@@ -2,7 +2,7 @@
 {% include '../navbar.html' %}
 
 <section class="bg-light">
-    <div class="container border rounded my-3">
+    <div class="container-lg border rounded my-3">
         <div class="row m-4 text-center">
             <h1> {{game.title}} </h1>
         </div>
@@ -47,7 +47,7 @@
 
 {% if trailer_id %}
 
-<div class="container">
+<div class="container-lg">
     <h2 class="my-2">Trailer</h2>
     <div class="d-flex justify-content-center border rounded p-0 my-1">
         <div class="p-5 my-3 w-50 border ratio ratio-16x9">
@@ -64,7 +64,7 @@
 {% load crispy_forms_tags %}
 
 <section id="ratings" class="bg-light">
-    <div class="container">
+    <div class="container-lg">
         <h2 class="my-2" >Oceny i opinie</h2>
         <div class="my-3 mb-4 px-3">
             {% if request.user.is_authenticated %}

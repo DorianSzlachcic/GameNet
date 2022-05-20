@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/0b484609-8571-4df6-9c75-f26755f7e688/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/gamenet-project",
+    "appService.deploySubpath": "."
+}

@@ -29,6 +29,8 @@ def game_site(request, id):
             rating.author = request.user
             rating.game = game
             rating.save()
+            form = RatingForm()
+
 
 
     ratings = Rating.objects.filter(game = game)

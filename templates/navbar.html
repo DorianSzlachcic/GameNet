@@ -1,6 +1,6 @@
     <!--Main navbar-->
     <nav class="navbar sticky-top navbar-expand-md bg-dark navbar-dark">
-        <div class="container">
+        <div class="container-lg">
             <a href="{% url 'home' %}" class="navbar-brand fs-3">GameNet</a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
@@ -25,7 +25,7 @@
     </nav>
     <!--Search input-->
     <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-        <div class="container">
+        <div class="container-lg">
             <form class="input-group mb-3" method="POST" action="{% url 'search' %}">
                 {% csrf_token %}
                 <input type="text" class="form-control" name="search" placeholder="Mario, Portal 2, Elden Ring...">
