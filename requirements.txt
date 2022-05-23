@@ -2,3 +2,4 @@ Babel==2.10.1
 Django==4.0.4
 django-crispy-forms==1.14.0
 gunicorn
+psycopg2

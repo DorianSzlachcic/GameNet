@@ -26,9 +26,9 @@ SECRET_KEY = 'django-insecure-2txu9cxrxb(wb3zv*4c5duy=ny%tivpzrw+c1r%ss2e+hdk9_x
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','gamenet.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1','gamenet.herokuapp.com', '0.0.0.0']
 
-CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000/', 'https://gamenet.herokuapp.com/']
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000/', 'https://gamenet.herokuapp.com/', 'http://0.0.0.0:5000/']
 
 # Application definition
 
@@ -81,8 +81,12 @@ WSGI_APPLICATION = 'GameNet.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'd7p7pk114nf7k9',
+        'HOST': 'ec2-176-34-211-0.eu-west-1.compute.amazonaws.com',
+        'PORT': '5432',
+        'USER': 'znzapldfkrhavs',
+        'PASSWORD': '924b4739d7e5ff7d1d163bbb3852ab49286c6003549c0860d451ff6c46bdbae9'
     }
 }
 
