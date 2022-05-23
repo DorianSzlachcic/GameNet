@@ -1,3 +1,4 @@
+from multiprocessing import context
 from operator import itemgetter
 import django
 from django.conf import settings
@@ -8,12 +9,13 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.http import HttpResponse
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User
 from django.db.models import Avg
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash
 
 from babel.dates import format_datetime
 
@@ -132,6 +134,21 @@ def profilePage(request):
     context = {'user_ratings': zip(user_ratings,last_edit_formated) if user_ratings else None }
     return render(request, "accounts/my_profile.html", context)
 
+@login_required
+def change_password(request):
+
+    form = PasswordChangeForm(request.user)
+
+    if request.method == "POST":
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, "Hasło zostało zmienione", extra_tags="success")
+            return redirect('changePassword')
+
+    context = {'form': form }
+    return render(request, "accounts/change_password.html", context)
 
 def activate(request, uidb64, token):
     try:
