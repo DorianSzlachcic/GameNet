@@ -123,9 +123,9 @@ def registerPage(request):
 @login_required
 def profilePage(request):
 
-    user_ratings = Rating.objects.filter(author=request.user)
+    user_ratings = Rating.objects.filter(author=request.user).order_by("-edit_date")
     
-    last_edit_dates = Rating.objects.filter(author = request.user).values_list("edit_date",flat=True)
+    last_edit_dates = user_ratings.values_list("edit_date",flat=True)
     last_edit_formated = []
 
     for last in last_edit_dates:
@@ -169,10 +169,13 @@ def activate(request, uidb64, token):
 
 @login_required
 def deleteAccount(request):
-    account = request.user
+    if request.method == "POST":
+        account = request.user
 
-    logout(request)
-    account.delete()
+        logout(request)
+        account.delete()
 
-    messages.error(request,"Usunięto konto",extra_tags="danger")
-    return redirect('login')
+        messages.error(request,"Usunięto konto",extra_tags="danger")
+        return redirect('login')
+    else:
+        return render(request, "accounts/confirm_delete_acc.html")
