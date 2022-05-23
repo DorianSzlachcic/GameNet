@@ -27,9 +27,9 @@ SECRET_KEY = 'django-insecure-2txu9cxrxb(wb3zv*4c5duy=ny%tivpzrw+c1r%ss2e+hdk9_x
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['gamenet-project.azurewebsites.net', '127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1']
 
-CSRF_TRUSTED_ORIGINS = ['https://gamenet-project.azurewebsites.net', 'http://127.0.0.1:8000/']
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000/']
 
 # Application definition
 
@@ -49,7 +49,6 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -112,8 +111,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = EmailConfig.email_user
-EMAIL_HOST_PASSWORD = EmailConfig.email_password
+EMAIL_HOST_USER = os.environ.get('EMAIL_SMTP_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_SMTP_PASSWORD')
 EMAIL_PORT = 587
 
 #Media
@@ -138,23 +137,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'media'),
-]
-
-AZURE_ACCOUNT_NAME = AzureStorageConfig._AZURE_ACCOUNT_NAME
-AZURE_ACCOUNT_KEY = AzureStorageConfig._AZURE_ACCOUNT_KEY
-AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
-AZURE_LOCATION = 'media'
-AZURE_CONTAINER = 'media'
-
-STATIC_LOCATION = 'media'
-STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
-
-STATICFILES_STORAGE = 'storages.backends.azure_storage.AzureStorage'
-DEFAULT_FILE_STORAGE = 'GameNet.custom_azure.AzureMediaStorage'
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
