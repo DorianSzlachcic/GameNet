@@ -26,9 +26,9 @@ SECRET_KEY = 'django-insecure-2txu9cxrxb(wb3zv*4c5duy=ny%tivpzrw+c1r%ss2e+hdk9_x
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1','gamenet.herokuapp.com']
 
-CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000/']
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000/', 'https://gamenet.herokuapp.com/']
 
 # Application definition
 
