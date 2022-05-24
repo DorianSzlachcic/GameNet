@@ -5,3 +5,6 @@ gunicorn
 psycopg2
 whitenoise
 Pillow
+django-storages[azure]
+azure-storage-blob
+azure-identity

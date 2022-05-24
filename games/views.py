@@ -83,5 +83,7 @@ def editRating(request, id):
 def search(request):
     if request.method == "POST":
         searched_games = Game.objects.filter(title__contains = request.POST.get('search'))
+    else:
+        searched_games = Game.objects.all()
     context = {'searched_games': searched_games}
     return render(request, "games/search.html",context)
