@@ -1,0 +1,65 @@
+{% include '../head.html' %}
+{% include '../navbar.html' %}
+
+<section>
+    <div class="container-lg">
+        <h2 class="my-4">Najnowsze newsy</h2>
+
+        {% if news_objects %}
+        {% for news in news_objects %}
+        <a href="{% url 'news' id=news.pk %}" class="text-reset text-decoration-none">
+        <div class="card my-3">
+            <div class="row">
+                <div class="col-3">
+                    {% if news.image %}
+                    <img src="{{ news.image.url }}" alt="news image" class="img-fluid rounded-start"/>
+                    {% else %}
+                    ----
+                    {% endif %}
+                </div>
+                <div class="col">
+                    <div class="card-body">
+                        <h5 class="card-title">{{news.title}}</h5>
+                        <p class="card-text">{{news.lead|slice:":256"|safe}}{% if news.lead|length > 256 %}...{% endif %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </a>
+        
+        {% endfor %}
+        {% else %}
+
+        <div class="card my-3">
+            <div class="card-body">
+                <h3 class="fs-4">Brak wyszukiwań</h3>
+                <span class="text-muted">Nie znaleziono gier na podstawie twojego wyszukiwania</span>
+            </div>
+        </div>
+        
+        {% endif %}
+
+    </div>
+</section>
+
+<section>
+    <div class="container my-4">
+        <div class="btn-toolbar d-flex justify-content-center">
+            <div class="btn-group mx-3">
+                {% if news_objects.has_previous %}
+                    <a href="?page=1" class="btn btn-outline-secondary"><i class="bi bi-chevron-double-left"></i></a>
+                    <a href="?page={{ news_objects.previous_page_number }}" class="btn btn-outline-secondary"><i class="bi bi-chevron-left"></i></a>
+                {% endif %}
+            </div>
+                <span class="border rounded border-secondary text-muted p-2">{{news_objects.number}}</span>
+            <div class="btn-group mx-3">
+                {% if news_objects.has_next %}
+                    <a href="?page={{ news_objects.next_page_number }}" class="btn btn-outline-secondary"><i class="bi bi-chevron-right"></i></a>
+                    <a href="?page={{ news_objects.paginator.num_pages }}" class="btn btn-outline-secondary"><i class="bi bi-chevron-double-right"></i></a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{% include '../footer.html' %}

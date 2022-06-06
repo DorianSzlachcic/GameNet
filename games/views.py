@@ -1,8 +1,10 @@
 from email.utils import format_datetime
 from platform import release
 from django.shortcuts import redirect, render
-from django.db.models import Avg
+from django.db.models import Avg, Q
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 from babel.dates import format_date, format_datetime
 from .models import Rating,Game
@@ -30,8 +32,6 @@ def game_site(request, id):
             rating.game = game
             rating.save()
             form = RatingForm()
-
-
 
     ratings = Rating.objects.filter(game = game)
 
@@ -68,11 +68,9 @@ def editRating(request, id):
     rating = Rating.objects.get(pk=id)
 
     if request.method == 'POST':
-        form = RatingForm(request.POST)
+        form = RatingForm(request.POST, instance=rating)
         if form.is_valid():
-            rating.description = form.cleaned_data["description"]
-            rating.stars = form.cleaned_data["stars"]
-            rating.save()
+            form.save()
             return redirect('profile')
 
     form = RatingForm(instance=rating)
@@ -80,10 +78,23 @@ def editRating(request, id):
     context = {'form': form, 'game_title': rating.game.title}
     return render(request, "games/edit_rating.html", context)
 
+@csrf_exempt
 def search(request):
-    if request.method == "POST":
-        searched_games = Game.objects.filter(title__contains = request.POST.get('search'))
+    page = request.GET.get('page', 1)
+
+    if request.GET.get('search'):
+        searched_games = Game.objects.filter(Q(title__icontains = request.GET.get('search')) | Q(description__icontains = request.GET.get('search')))
     else:
         searched_games = Game.objects.all()
+    
+    paginator = Paginator(searched_games, 10)
+
+    try:
+        searched_games = paginator.get_page(page)
+    except PageNotAnInteger:
+        searched_games = paginator.get_page(1)
+    except EmptyPage:
+        searched_games = paginator.page(paginator.num_pages)
+
     context = {'searched_games': searched_games}
     return render(request, "games/search.html",context)

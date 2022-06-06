@@ -34,6 +34,8 @@ CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000/', 'https://gamenet.herokuapp.com
 
 INSTALLED_APPS = [
     'games.apps.GamesConfig',
+    'news.apps.NewsConfig',
+    'accounts.apps.AccountsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,9 +43,18 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
+    'ckeditor'
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+CKEDITOR_BASEPATH = "/media/ckeditor/ckeditor/"
+CKEDITOR_CONFIGS = {
+    'default': {
+        'height': 600,
+    },
+}
+
 
 MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',

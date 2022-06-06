@@ -21,12 +21,16 @@ from babel.dates import format_datetime
 
 
 from games.models import Rating, Game
+from news.models import News
 from .forms import RegisterForm
 from accounts.tokens import TokenGenerator
 
 # Create your views here.
 
 def homePage(request):
+
+    news3 = News.objects.order_by("-edit_date")
+
     top5 = []
     for game in Game.objects.all():
         ratings = Rating.objects.filter(game=game)
@@ -39,7 +43,7 @@ def homePage(request):
     while len(top5) < 5:
         top5.append((None,None))
 
-    context = {'top5': top5}
+    context = {'top5': top5, 'news3': news3}
     return render(request, "home.html", context)
 
 

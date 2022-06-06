@@ -7,26 +7,22 @@
     <div class="container-lg mt-4">
         <h2>Edytuj opinię o grze {{game_title}}</h2>
         <div class="my-3 mb-4 px-3">
-            {% if request.user.is_authenticated %}
-                <form action="" method="post">
-                    {% csrf_token %}
+            <form action="" method="post">
+                {% csrf_token %}
 
-                    <div class="row px-3">
-                        <div class="col-md-10">
-                            <label for="id_description">Opis</label>
-                            {{form.description|as_crispy_field}}
-                        </div>
-                    
-                        <div class="col-md-2 float-left">
-                            <label for="id_stars">Ocena (0-5)</label>
-                            {{form.stars|as_crispy_field}}
-                            <button class="btn btn-primary my-3" type="submit">Zapisz</button>
-                        </div>
+                <div class="row px-3">
+                    <div class="col-md-10">
+                        <label for="id_description">Opis</label>
+                        {{form.description|as_crispy_field}}
                     </div>
-                </form>
-            {% else %}
-                <a href="{% url 'login' %}" class="btn btn-primary mx-3">Zaloguj się</a> aby dodawać opinie.
-            {% endif %}
+                
+                    <div class="col-md-2 float-left">
+                        <label for="id_stars">Ocena (0-5)</label>
+                        {{form.stars|as_crispy_field}}
+                        <button class="btn btn-primary my-3" type="submit">Zapisz</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </section>

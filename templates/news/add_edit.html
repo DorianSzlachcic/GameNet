@@ -1,0 +1,46 @@
+{% include '../head.html' %}
+{% include '../navbar.html' %}
+
+{% load crispy_forms_tags %}
+{% load static %}
+<script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+<script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+
+<section>
+    <div class="container-lg mt-4">
+        <h2>{% if edit %}Edytuj news{% else %}Dodaj news{% endif %}</h2>
+        <div class="my-3 mb-4 px-3">
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                    <button class="btn btn-primary my-3" type="submit">{% if edit %}Edytuj{% else %}Dodaj{% endif %}</button>
+                    <a href="{% url 'yourNews' %}" class="btn btn-secondary my-3">Anuluj</a>
+
+                    <div class="row">
+                        <label for="id_title" class="my-2 fw-bold">Tytuł</label>
+                        {{form.title|as_crispy_field}}
+                    </div>
+                    <div class="row my-2">
+                        <label for="id_lead" class="my-2 fw-bold">Zapowiedź</label>
+                        {{form.lead|as_crispy_field}}
+                    </div>                    
+                    <div class="row my-2">
+                        <label for="id_image" class="my-2 fw-bold">Dodaj zdjęcie</label>
+                        {{form.image|as_crispy_field}}
+                    </div>
+                    <div class="row my-2">
+                        <label for="id_content" class="my-2 fw-bold">Treść</label>
+                        <div class="text-center">
+                            {{form.content}}
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.getElementById("id_lead").rows = "5";
+</script>
+
+{% include '../footer.html' %}

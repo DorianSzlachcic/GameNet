@@ -103,7 +103,7 @@
                                 <span class="text-muted">Brak opisu</span>
                             {% endif %}
                         </div>
-                        <div class="col d-flex justify-content-center border-start">
+                        <div class="col d-flex justify-content-center border-start" style="max-height: 25px;">
                             Ocena: 
                             <div class="mx-2 bg-{% if rating.stars <= 2.5 %}danger{% elif rating.stars < 4.0 %}warning{% else %}success{% endif %} rounded text-light">
                                 <div class="mx-2">{{rating.stars}}</div>

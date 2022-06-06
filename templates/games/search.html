@@ -44,4 +44,24 @@
     </div>
 </section>
 
+<section>
+    <div class="container my-4">
+        <div class="btn-toolbar d-flex justify-content-center">
+            <div class="btn-group mx-3">
+                {% if searched_games.has_previous %}
+                    <a href="?page=1&search={{request.GET.search}}" class="btn btn-outline-secondary"><i class="bi bi-chevron-double-left"></i></a>
+                    <a href="?page={{ searched_games.previous_page_number }}&search={{request.GET.search}}" class="btn btn-outline-secondary"><i class="bi bi-chevron-left"></i></a>
+                {% endif %}
+            </div>
+                <span class="border rounded border-secondary text-muted p-2">{{searched_games.number}}</span>
+            <div class="btn-group mx-3">
+                {% if searched_games.has_next %}
+                    <a href="?page={{ searched_games.next_page_number }}&search={{request.GET.search}}" class="btn btn-outline-secondary"><i class="bi bi-chevron-right"></i></a>
+                    <a href="?page={{ searched_games.paginator.num_pages }}&search={{request.GET.search}}" class="btn btn-outline-secondary"><i class="bi bi-chevron-double-right"></i></a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
 {% include '../footer.html' %}
