@@ -1,4 +1,5 @@
 Django
+django-ckeditor
 django-crispy-forms
 Babel
 gunicorn
