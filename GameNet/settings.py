@@ -129,8 +129,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp-mail.outlook.com'
-EMAIL_HOST_USER = os.environ("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = os.environ("EMAIL_HOST_PASSWORD")
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 EMAIL_PORT = 587
 
 #Media
@@ -162,9 +162,9 @@ STATICFILES_DIRS = [
 ]
 
 cloudinary.config( 
-  cloud_name = os.environ("cloud_name"), 
-  api_key = os.environ("api_key"), 
-  api_secret = os.environ("api_secret") 
+  cloud_name = os.environ.get("cloud_name"), 
+  api_key = os.environ.get("api_key"), 
+  api_secret = os.environ.get("api_secret") 
 )
 
 
