@@ -1,15 +1,20 @@
 from email.utils import format_datetime
 from platform import release
 from django.shortcuts import redirect, render
-from django.db.models import Avg, Q
+from django.db.models import Avg, Q, Count
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 from babel.dates import format_date, format_datetime
+
+from news.models import News
 from .models import Rating,Game
 from .yt_id_parser import get_yt_id
 from .forms import RatingForm
+from reviews.models import Review
+
+from itertools import chain
 
 # Create your views here.
 
@@ -45,6 +50,8 @@ def game_site(request, id):
 
     for last in last_edit_dates:
         last_edit_formated.append(format_datetime(last, locale="pl_PL"))
+    
+    reviews_avg = Review.objects.filter(game = game).aggregate(Avg("points"))['points__avg']
 
     context = {
         'game': game, 
@@ -53,9 +60,17 @@ def game_site(request, id):
         'avg': avg, 
         'release_date': format_date(game.release_date, locale="pl_PL"), 
         'trailer_id': trailer_id,
-        'form': form
+        'form': form,
+        'reviews_avg': reviews_avg,
     }
     return render(request, "games/game_template.html", context)
+
+
+def ranking(request):
+    games = Game.objects.filter(rating__isnull=False, rating__accepted=True).annotate(avg_rating=Avg("rating__stars")).annotate(rating_count=Count("rating")).order_by("-avg_rating")[:20]
+    context = {'games': games}
+    return render(request, "games/ranking.html", context)
+
 
 @login_required
 def deleteRating(request, id):
@@ -84,6 +99,32 @@ def search(request):
 
     if request.GET.get('search'):
         searched_games = Game.objects.filter(Q(title__icontains = request.GET.get('search')) | Q(description__icontains = request.GET.get('search')))
+        searched_reviews = Review.objects.filter(Q(title__icontains = request.GET.get('search')) | Q(lead__icontains = request.GET.get('search')) | Q(content__icontains = request.GET.get('search')) | Q(summary__icontains = request.GET.get('search')))
+        searched_news = News.objects.filter(Q(title__icontains = request.GET.get('search')) | Q(lead__icontains = request.GET.get('search')) | Q(content__icontains = request.GET.get('search')))
+    else:
+        searched_games = Game.objects.all()
+        searched_reviews = Review.objects.all()
+        searched_news = News.objects.all()
+    
+    searched_items = list(chain(searched_games, searched_news, searched_reviews))
+
+    paginator = Paginator(searched_items, 10)
+
+    try:
+        searched_items = paginator.get_page(page)
+    except PageNotAnInteger:
+        searched_items = paginator.get_page(1)
+    except EmptyPage:
+        searched_items = paginator.page(paginator.num_pages)
+
+    context = {'searched_items': searched_items}
+    return render(request, "games/search.html",context)
+
+def game_list(request):
+    page = request.GET.get('page', 1)
+
+    if request.GET.get('search'):
+        searched_games = Game.objects.filter(Q(title__icontains = request.GET.get('search')) | Q(description__icontains = request.GET.get('search')))
     else:
         searched_games = Game.objects.all()
     
@@ -97,4 +138,4 @@ def search(request):
         searched_games = paginator.page(paginator.num_pages)
 
     context = {'searched_games': searched_games}
-    return render(request, "games/search.html",context)
+    return render(request, "games/game_list.html",context)

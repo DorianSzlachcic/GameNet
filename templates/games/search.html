@@ -5,24 +5,24 @@
     <div class="container-lg">
         <h2 class="my-4">Wyniki wyszukiwania</h2>
 
-        {% if searched_games %}
-        {% for game in searched_games %}
-        <a href="{% url 'game' id=game.pk %}" class="text-reset text-decoration-none">
+        {% if searched_items %}
+        {% for item in searched_items %}
+        <a href="{% if item.description %}{% url 'game' id=item.pk %}{% elif item.summary %}{% url 'review' id=item.pk %}{% else %}{% url 'news' id=item.pk %}{% endif %}" class="text-reset text-decoration-none">
         <div class="card my-3">
             <div class="row">
                 <div class="col-3">
-                    {% if game.image %}
-                    <img src="{{ game.image.url }}" alt="Game image" class="img-fluid rounded-start"/>
-                    {% elif game.image_link %}
-                    <img src="{{ game.image_link }}" alt="Game image" class="img-fluid rounded-start"/>
+                    {% if item.image %}
+                    <img src="{{ item.image.url }}" alt="item image" class="img-fluid rounded-start"/>
+                    {% elif item.image_link %}
+                    <img src="{{ item.image_link }}" alt="item image" class="img-fluid rounded-start"/>
                     {% else %}
-                    ----
+                    <img src="https://res.cloudinary.com/dzxo9mpqc/image/upload/v1656005252/no-photo-available_gyrfyl.png" alt="item image" class="img-fluid rounded-start">
                     {% endif %}
                 </div>
                 <div class="col">
                     <div class="card-body">
-                        <h5 class="card-title">{{game.title}}</h5>
-                        <p class="card-text">{{game.description|slice:":256"}}{% if game.description|length > 256 %}...{% endif %}</p>
+                        <h5 class="card-title">{{item.title}}</h5>
+                        <p class="card-text">{% if item.description %}{{item.description|slice:":256"}}{% if item.description|length > 256 %}...{% endif %}{% elif item.lead %}{{item.lead|slice:":256"}}{% if item.lead|length > 256 %}...{% endif %}{% endif %}</p>
                     </div>
                 </div>
             </div>
@@ -48,16 +48,16 @@
     <div class="container my-4">
         <div class="btn-toolbar d-flex justify-content-center">
             <div class="btn-group mx-3">
-                {% if searched_games.has_previous %}
+                {% if searched_items.has_previous %}
                     <a href="?page=1&search={{request.GET.search}}" class="btn btn-outline-secondary"><i class="bi bi-chevron-double-left"></i></a>
-                    <a href="?page={{ searched_games.previous_page_number }}&search={{request.GET.search}}" class="btn btn-outline-secondary"><i class="bi bi-chevron-left"></i></a>
+                    <a href="?page={{ searched_items.previous_page_number }}&search={{request.GET.search}}" class="btn btn-outline-secondary"><i class="bi bi-chevron-left"></i></a>
                 {% endif %}
             </div>
-                <span class="border rounded border-secondary text-muted p-2">{{searched_games.number}}</span>
+                <span class="border rounded border-secondary text-muted p-2">{{searched_items.number}}</span>
             <div class="btn-group mx-3">
-                {% if searched_games.has_next %}
-                    <a href="?page={{ searched_games.next_page_number }}&search={{request.GET.search}}" class="btn btn-outline-secondary"><i class="bi bi-chevron-right"></i></a>
-                    <a href="?page={{ searched_games.paginator.num_pages }}&search={{request.GET.search}}" class="btn btn-outline-secondary"><i class="bi bi-chevron-double-right"></i></a>
+                {% if searched_items.has_next %}
+                    <a href="?page={{ searched_items.next_page_number }}&search={{request.GET.search}}" class="btn btn-outline-secondary"><i class="bi bi-chevron-right"></i></a>
+                    <a href="?page={{ searched_items.paginator.num_pages }}&search={{request.GET.search}}" class="btn btn-outline-secondary"><i class="bi bi-chevron-double-right"></i></a>
                 {% endif %}
             </div>
         </div>

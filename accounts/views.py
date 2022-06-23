@@ -16,6 +16,7 @@ from django.contrib.auth.models import User
 from django.db.models import Avg
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
+from django.db.models import Count
 
 from babel.dates import format_datetime
 
@@ -34,17 +35,11 @@ def homePage(request):
     news3 = News.objects.order_by("-edit_date")[:3]
     reviews3 = Review.objects.order_by("-edit_date")[:3]
 
-    top5 = []
-    for game in Game.objects.all():
-        ratings = Rating.objects.filter(game=game).filter(accepted=True)
-        if ratings:
-            avg = ratings.aggregate(Avg('stars'))['stars__avg']
-            top5.append((game, avg))
-    
-    top5 = sorted(top5, key=itemgetter(1),reverse=True)[:5]
+    top5 = Game.objects.filter(rating__isnull=False, rating__accepted=True).annotate(avg_rating=Avg("rating__stars")).annotate(rating_count=Count("rating")).order_by("-avg_rating")[:5]
+    top5 = list(top5)
 
     while len(top5) < 5:
-        top5.append((None,None))
+        top5.append(None)
 
     context = {'top5': top5, 'news3': news3 if news3.count() != 0 else None, 'reviews3': reviews3 if reviews3.count() != 0 else None}
     return render(request, "home.html", context)

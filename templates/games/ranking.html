@@ -1,0 +1,57 @@
+{% include '../head.html' %}
+{% include '../navbar.html' %}
+
+<section>
+    <div class="container-lg">
+        <h2 class="my-4">Top 20 gier</h2>
+
+        {% if games %}
+        {% for game in games %}
+        <a href="{% url 'game' id=game.pk %}" class="text-reset text-decoration-none">
+        <div class="card my-4">
+            <div class="row">
+                <div class="col-md-1 text-center my-auto">
+                    <span class="fs-3">#{{forloop.counter}}</span>
+                </div>
+                <div class="col-md-3">
+                    {% if game.image %}
+                    <img src="{{ game.image.url }}" alt="Game image" class="img-fluid rounded-start"/>
+                    {% elif game.image_link %}
+                    <img src="{{ game.image_link }}" alt="Game image" class="img-fluid rounded-start"/>
+                    {% else %}
+                    ----
+                    {% endif %}
+                </div>
+                <div class="col-md">
+                    <div class="card-body">
+                        <h5 class="card-title">{{game.title}}</h5>
+                        <p class="card-text">{{game.description|slice:":256"}}{% if game.description|length > 256 %}...{% endif %}</p>
+                    </div>
+                </div>
+                <div class="col-md-2 me-3">
+                    <h5 class="mt-4">Średnia ocen graczy</h5>
+                    <div style="width: 60px; height: 50px;" class="col-2 fs-2 mt-3 bg-{% if game.avg_rating <= 2.5 %}danger{% elif game.avg_rating < 4.0 %}warning{% else %}success{% endif %} rounded text-light d-flex justify-content-center">
+                        <div class="mx-2">{{game.avg_rating}}</div>
+                    </div>
+                    <p class="m-1">z {{game.rating_count}} opinii użytkowników</p>
+                </div>
+            </div>
+        </div>
+        </a>
+        
+        {% endfor %}
+        {% else %}
+
+        <div class="card my-3">
+            <div class="card-body">
+                <h3 class="fs-4">Brak rankingu</h3>
+                <span class="text-muted">Ranking pojawi się gdy pojawią się pierwsze opinie gier</span>
+            </div>
+        </div>
+        
+        {% endif %}
+
+    </div>
+</section>
+
+{% include '../footer.html' %}

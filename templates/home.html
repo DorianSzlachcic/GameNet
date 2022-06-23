@@ -41,6 +41,7 @@
         </div>
     </section>
     {% endif %}
+
     <!--Top5 section-->
     <section class="my-4" id="top5">
         <div class="container-lg">
@@ -48,16 +49,18 @@
 
             <div class="row">
                 {% for game in top5 %}
-                    {% if game.0 %}
+                    {% if game %}
                     <div class="col-lg my-2">
-                        <a href="{% url 'game' id=game.0.id %}" class="text-reset text-decoration-none">
+                        <a href="{% url 'game' id=game.id %}" class="text-reset text-decoration-none">
                             <div class="card">
                                 <div class="card-image bg-dark d-flex justify-content-center rounded">
-                                    <img src="{% if game.0.image %} {{ game.0.image.url }} {% elif game.0.image_link %} {{game.0.image_link}} {% else %} https://res.cloudinary.com/dzxo9mpqc/image/upload/v1656005252/no-photo-available_gyrfyl.png {% endif %}" class="card-img-top img-fluid" alt="">
+                                    <img src="{% if game.image %} {{ game.image.url }} {% elif game.image_link %} {{game.image_link}} {% else %} https://res.cloudinary.com/dzxo9mpqc/image/upload/v1656005252/no-photo-available_gyrfyl.png {% endif %}" class="card-img-top img-fluid" alt="">
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title">#{{forloop.counter}}</h5>
-                                    <div >{{game.0.title}} 
+                                    <div>{{game.title}}</div>
+                                    <div style="width: 50px; height: 35px;" class="fs-5 mt-3 bg-{% if game.avg_rating <= 2.5 %}danger{% elif game.avg_rating < 4.0 %}warning{% else %}success{% endif %} rounded text-light d-flex justify-content-center">
+                                        <div class="mx-2">{{game.avg_rating}}</div>
                                     </div>
                                 </div>
                             </div>

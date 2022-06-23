@@ -1,0 +1,67 @@
+{% include '../head.html' %}
+{% include '../navbar.html' %}
+
+<section>
+    <div class="container-lg">
+        <h2 class="my-4">Lista gier</h2>
+
+        {% if searched_games %}
+        {% for game in searched_games %}
+        <a href="{% url 'game' id=game.pk %}" class="text-reset text-decoration-none">
+        <div class="card my-3">
+            <div class="row">
+                <div class="col-3">
+                    {% if game.image %}
+                    <img src="{{ game.image.url }}" alt="Game image" class="img-fluid rounded-start"/>
+                    {% elif game.image_link %}
+                    <img src="{{ game.image_link }}" alt="Game image" class="img-fluid rounded-start"/>
+                    {% else %}
+                    ----
+                    {% endif %}
+                </div>
+                <div class="col">
+                    <div class="card-body">
+                        <h5 class="card-title">{{game.title}}</h5>
+                        <p class="card-text">{{game.description|slice:":256"}}{% if game.description|length > 256 %}...{% endif %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </a>
+        
+        {% endfor %}
+        {% else %}
+
+        <div class="card my-3">
+            <div class="card-body">
+                <h3 class="fs-4">Brak wyszukiwań</h3>
+                <span class="text-muted">Nie znaleziono gier na podstawie twojego wyszukiwania</span>
+            </div>
+        </div>
+        
+        {% endif %}
+
+    </div>
+</section>
+
+<section>
+    <div class="container my-4">
+        <div class="btn-toolbar d-flex justify-content-center">
+            <div class="btn-group mx-3">
+                {% if searched_games.has_previous %}
+                    <a href="?page=1" class="btn btn-outline-secondary"><i class="bi bi-chevron-double-left"></i></a>
+                    <a href="?page={{ searched_games.previous_page_number }}" class="btn btn-outline-secondary"><i class="bi bi-chevron-left"></i></a>
+                {% endif %}
+            </div>
+                <span class="border rounded border-secondary text-muted p-2">{{searched_games.number}}</span>
+            <div class="btn-group mx-3">
+                {% if searched_games.has_next %}
+                    <a href="?page={{ searched_games.next_page_number }}" class="btn btn-outline-secondary"><i class="bi bi-chevron-right"></i></a>
+                    <a href="?page={{ searched_games.paginator.num_pages }}" class="btn btn-outline-secondary"><i class="bi bi-chevron-double-right"></i></a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{% include '../footer.html' %}
