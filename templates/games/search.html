@@ -10,7 +10,7 @@
         <a href="{% if item.description %}{% url 'game' id=item.pk %}{% elif item.summary %}{% url 'review' id=item.pk %}{% else %}{% url 'news' id=item.pk %}{% endif %}" class="text-reset text-decoration-none">
         <div class="card my-3">
             <div class="row">
-                <div class="col-3">
+                <div class="col-md-3">
                     {% if item.image %}
                     <img src="{{ item.image.url }}" alt="item image" class="img-fluid rounded-start"/>
                     {% elif item.image_link %}
@@ -19,7 +19,7 @@
                     <img src="https://res.cloudinary.com/dzxo9mpqc/image/upload/v1656005252/no-photo-available_gyrfyl.png" alt="item image" class="img-fluid rounded-start">
                     {% endif %}
                 </div>
-                <div class="col">
+                <div class="col-md">
                     <div class="card-body">
                         <h5 class="card-title">{{item.title}}</h5>
                         <p class="card-text">{% if item.description %}{{item.description|slice:":256"}}{% if item.description|length > 256 %}...{% endif %}{% elif item.lead %}{{item.lead|slice:":256"}}{% if item.lead|length > 256 %}...{% endif %}{% endif %}</p>

@@ -3,6 +3,7 @@ from platform import release
 from django.shortcuts import redirect, render
 from django.db.models import Avg, Q, Count
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
@@ -36,6 +37,7 @@ def game_site(request, id):
             rating.author = request.user
             rating.game = game
             rating.save()
+            messages.success(request, "Twoja opinia została przekazana do moderacji. Będziesz mógł ją zobaczyć na stronie gdy zostanie zaakceptowana.")
             form = RatingForm()
 
     ratings = Rating.objects.filter(game = game).filter(accepted = True)

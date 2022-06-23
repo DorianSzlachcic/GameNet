@@ -189,9 +189,9 @@ STATICFILES_DIRS = [
 ]
 
 cloudinary.config( 
-  cloud_name = os.environ.get("cloud_name"), 
-  api_key = os.environ.get("api_key"), 
-  api_secret = os.environ.get("api_secret") 
+  cloud_name = 'dzxo9mpqc', 
+  api_key = '912821621193419', 
+  api_secret = 'fOcFTP6RldHtzXaqa4_hq-iXcIU'
 )
 
 
