@@ -9,6 +9,7 @@ urlpatterns = [
     path('news/',include('news.urls')),
     path('reviews/',include('reviews.urls')),
     path('moderation/',include('moderation.urls')),
+    path('accounts/', include('allauth.urls')),
     path('admin/', admin.site.urls)
 ] 
 

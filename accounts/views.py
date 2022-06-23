@@ -31,6 +31,7 @@ from moderation.models import ModerationMessage
 # Create your views here.
 
 def homePage(request):
+    list(messages.get_messages(request)) #removes all messages from e.g allauth framework
 
     news3 = News.objects.order_by("-edit_date")[:3]
     reviews3 = Review.objects.order_by("-edit_date")[:3]

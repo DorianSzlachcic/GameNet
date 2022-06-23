@@ -1,6 +1,8 @@
 {% include '../head.html' %}
 {% include '../navbar.html' %}
 {% load crispy_forms_tags %}
+{% load socialaccount %}
+
 
 <div class="container-lg mt-5">
     <h2 class="text-center mb-5">Logowanie</h2>
@@ -23,6 +25,9 @@
                 
             </form>
             <p class="text-center my-3">Nie masz konta? <a href="{% url 'register' %}">Załóż je tutaj</a></p>
+            <div class="row mx-auto">
+                <a class="btn btn-secondary" href="{% provider_login_url 'google' %}"><i class="bi bi-google mx-3"></i>Zaloguj się przez konto Google</a>
+            </div>
             {% for message in messages%}
                 <p class="alert alert-{{message.tags}} d-flex align-items-center mt-5 px-3" role="alert">
                     <span class="mx-auto fs-5">{{message}}</span>

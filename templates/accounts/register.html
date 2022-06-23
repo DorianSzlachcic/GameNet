@@ -1,6 +1,7 @@
 {% include '../head.html' %}
 {% include '../navbar.html' %}
 {% load crispy_forms_tags %}
+{% load socialaccount %}
 
 <div class="container-lg mt-5">
     <h2 class="text-center mb-5">Rejestracja</h2>
@@ -39,6 +40,9 @@
                 </div>
                 <div class="row mx-auto">
                     <button class="btn btn-primary btn-lg" type="submit">Zarejestruj się</button>
+                </div>
+                <div class="row mx-auto mt-3">
+                    <a class="btn btn-secondary" href="{% provider_login_url 'google' %}"><i class="bi bi-google mx-3"></i>Zarejestruj się przez konto Google</a>
                 </div>
             </form>
         </div>
