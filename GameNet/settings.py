@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-2txu9cxrxb(wb3zv*4c5duy=ny%tivpzrw+c1r%ss2e+hdk9_x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1','gamenet.herokuapp.com', '0.0.0.0']
 
@@ -189,9 +189,9 @@ STATICFILES_DIRS = [
 ]
 
 cloudinary.config( 
-  cloud_name = 'dzxo9mpqc', 
-  api_key = '912821621193419', 
-  api_secret = 'fOcFTP6RldHtzXaqa4_hq-iXcIU'
+  cloud_name = os.environ.get("cloud_name"), 
+  api_key = os.environ.get("api_key"), 
+  api_secret = os.environ.get("api_secret") 
 )
 
 
