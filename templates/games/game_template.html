@@ -33,7 +33,7 @@
                         </a>
                         
                         <h5 class="card-title mt-4">Średnia ocen recenzentów</h5>
-                        <div style="width: 50px; height: 50px;" class="fs-2 mt-3 bg-{% if reviews_avg <= 3.3 %}danger{% elif reviews_avg < 6.6 %}warning{% else %}success{% endif %} rounded-circle text-light d-flex justify-content-center">
+                        <div style="width: 60px; height: 60px;" class="fs-2 mt-3 bg-{% if reviews_avg <= 3.3 %}danger{% elif reviews_avg < 6.6 %}warning{% else %}success{% endif %} rounded-circle text-light d-flex justify-content-center">
                             <div class="mx-2">{% if reviews_avg %}{{reviews_avg}}{% else %}-{% endif %}</div>
                         </div>
                     </div>
