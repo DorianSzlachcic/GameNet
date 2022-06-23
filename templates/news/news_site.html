@@ -9,7 +9,9 @@
         </div>
         <div class="row mb-4">
             {% if news.image %}
-            <img class="image-fluid" style="max-height: 400px; object-fit: cover;" src="{{news.image.url}}" alt="">
+            <img src="{{ news.image.url }}" class="image-fluid" style="max-height: 400px; object-fit: cover;" alt="...">
+            {% else %}
+            <img src="https://res.cloudinary.com/dzxo9mpqc/image/upload/v1656005252/no-photo-available_gyrfyl.png" class="image-fluid" style="max-height: 400px; object-fit: cover;" alt="...">
             {% endif %}
         </div>
         <div class="row mx-5" id="content">

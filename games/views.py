@@ -33,7 +33,7 @@ def game_site(request, id):
             rating.save()
             form = RatingForm()
 
-    ratings = Rating.objects.filter(game = game)
+    ratings = Rating.objects.filter(game = game).filter(accepted = True)
 
     if ratings:
         avg = ratings.aggregate(Avg("stars"))

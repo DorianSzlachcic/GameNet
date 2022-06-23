@@ -25,6 +25,7 @@ from news.models import News
 from reviews.models import Review
 from .forms import RegisterForm
 from accounts.tokens import TokenGenerator
+from moderation.models import ModerationMessage
 
 # Create your views here.
 
@@ -35,7 +36,7 @@ def homePage(request):
 
     top5 = []
     for game in Game.objects.all():
-        ratings = Rating.objects.filter(game=game)
+        ratings = Rating.objects.filter(game=game).filter(accepted=True)
         if ratings:
             avg = ratings.aggregate(Avg('stars'))['stars__avg']
             top5.append((game, avg))
@@ -128,8 +129,17 @@ def registerPage(request):
 
 @login_required
 def profilePage(request):
+    mod_messages = ModerationMessage.objects.filter(rating__author=request.user)
 
-    user_ratings = Rating.objects.filter(author=request.user).order_by("-edit_date")
+    context = {'mod_messages': mod_messages if mod_messages else None }
+
+    for message in mod_messages:
+        if message.rating.accepted == False:
+            message.rating.delete()
+        else:
+            message.delete()
+    
+    user_ratings = Rating.objects.filter(author=request.user).order_by("-edit_date").order_by("accepted")
     
     last_edit_dates = user_ratings.values_list("edit_date",flat=True)
     last_edit_formated = []
@@ -137,7 +147,8 @@ def profilePage(request):
     for last in last_edit_dates:
         last_edit_formated.append(format_datetime(last, locale="pl_PL"))
 
-    context = {'user_ratings': zip(user_ratings,last_edit_formated) if user_ratings else None }
+    context['user_ratings'] = zip(user_ratings,last_edit_formated) if user_ratings else None
+
     return render(request, "accounts/my_profile.html", context)
 
 @login_required

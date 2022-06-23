@@ -8,6 +8,7 @@ urlpatterns = [
     path('games/',include('games.urls')),
     path('news/',include('news.urls')),
     path('reviews/',include('reviews.urls')),
+    path('moderation/',include('moderation.urls')),
     path('admin/', admin.site.urls)
 ] 
 

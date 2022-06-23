@@ -19,7 +19,7 @@
                         {% if news.image %}
                         <img src="{{ news.image.url }}" class="d-block w-100" alt="...">
                         {% else %}
-                        -------
+                        <img src="https://res.cloudinary.com/dzxo9mpqc/image/upload/v1656005252/no-photo-available_gyrfyl.png" class="d-block w-100" alt="...">
                         {% endif %}
                         <div class="carousel-caption p-2 rounded d-none d-md-block">
                             <h5>{{news.title}}</h5>
@@ -53,7 +53,7 @@
                         <a href="{% url 'game' id=game.0.id %}" class="text-reset text-decoration-none">
                             <div class="card">
                                 <div class="card-image bg-dark d-flex justify-content-center rounded">
-                                    <img src="{% if game.0.image %} {{ game.0.image.url }} {% elif game.0.image_link %} {{game.0.image_link}} {% else %} - {% endif %}" class="card-img-top img-fluid" alt="">
+                                    <img src="{% if game.0.image %} {{ game.0.image.url }} {% elif game.0.image_link %} {{game.0.image_link}} {% else %} https://res.cloudinary.com/dzxo9mpqc/image/upload/v1656005252/no-photo-available_gyrfyl.png {% endif %}" class="card-img-top img-fluid" alt="">
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title">#{{forloop.counter}}</h5>
@@ -65,17 +65,15 @@
                     </div>
                     {% else %} 
                     <div class="col-lg my-2">
-                        <a href="#" class="text-reset text-decoration-none">
-                            <div class="card">
-                                <div class="card-image">
-                                    <img src="https://assets.reedpopcdn.com/elden_ring_krytykowane_przez_tworcow_z_ubisoftu_i_guerilla_games_headline.jpg/BROK/thumbnail/1200x900/quality/100/elden_ring_krytykowane_przez_tworcow_z_ubisoftu_i_guerilla_games_headline.jpg" class="card-img-top img-fluid" alt="">
-                                </div> 
-                                <div class="card-body">
-                                    <h5 class="card-title">#{{forloop.counter}}</h5>
-                                    <div><span class="text-muted">Zabrakło nam gier</span></div>
-                                </div>
+                        <div class="card">
+                            <div class="card-image">
+                                <img src="https://res.cloudinary.com/dzxo9mpqc/image/upload/v1656005252/no-photo-available_gyrfyl.png " class="card-img-top img-fluid" alt="">
+                            </div> 
+                            <div class="card-body">
+                                <h5 class="card-title">#{{forloop.counter}}</h5>
+                                <div><span class="text-muted">Zabrakło nam gier</span></div>
                             </div>
-                        </a>
+                        </div>
                     </div>                    
                     {% endif %}
                 {% endfor %}
@@ -96,7 +94,11 @@
                         <div class="card">
                             <div class="row">
                                 <div class="col-4">
-                                    <img src="{{review.image.url}}" alt="" class="img-fluid rounded-start">
+                                    {% if review.image %}
+                                    <img src="{{ review.image.url }}" class="img-fluid rounded-start" alt="...">
+                                    {% else %}
+                                    <img src="https://res.cloudinary.com/dzxo9mpqc/image/upload/v1656005252/no-photo-available_gyrfyl.png" class="img-fluid rounded-start" alt="...">
+                                    {% endif %}
                                 </div>
                                 <div class="col">
                                     <div class="card-body">

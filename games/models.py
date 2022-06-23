@@ -22,6 +22,7 @@ class Rating(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     stars = models.PositiveSmallIntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(5)])
     description = models.TextField(max_length=512, help_text="Twoja opinia", null=True, blank=True)
+    accepted = models.BooleanField(null=True, default=None)
     created_date = models.DateTimeField(auto_now_add=True)
     edit_date = models.DateTimeField(auto_now=True)
 

@@ -8,13 +8,7 @@
         </div>
         <div class="row my-3 d-flex justify-content-center">
             <div class="col-xl mx-4 game-img">
-                {% if game.image %}
-                <img src="{{ game.image.url }}" alt="Game image" class="img-fluid rounded"/>
-                {% elif game.image_link %}
-                <img src="{{ game.image_link }}" alt="Game image" class="img-fluid rounded"/>
-                {% else %}
-                ----
-                {% endif %}
+                <img src="{% if game.image %} {{ game.image.url }} {% elif game.image_link %} {{game.image_link}} {% else %} https://res.cloudinary.com/dzxo9mpqc/image/upload/v1656005252/no-photo-available_gyrfyl.png {% endif %}" alt="Game image" class="img-fluid rounded">
             </div>
             <div class="col-xl my-4 my-xl-1 text-end">
                 <p>

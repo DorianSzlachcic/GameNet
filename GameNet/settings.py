@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'news.apps.NewsConfig',
     'reviews.apps.ReviewsConfig',
     'accounts.apps.AccountsConfig',
+    'moderation.apps.ModerationConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
