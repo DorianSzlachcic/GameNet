@@ -1,0 +1,66 @@
+{% include '../head.html' %}
+{% include '../navbar.html' %}
+
+<section>
+    <div class="container-lg">
+        <h2 class="my-4">Najnowsze recenzje</h2>
+
+        {% if reviews_objects %}
+        {% for review in reviews_objects %}
+        <a href="{% url 'review' id=review.pk %}" class="text-reset text-decoration-none">
+        <div class="card my-3">
+            <div class="row">
+                <div class="col-3">
+                    {% if review.image %}
+                    <img src="{{ review.image.url }}" alt="review image" class="img-fluid rounded-start"/>
+                    {% else %}
+                    ----
+                    {% endif %}
+                </div>
+                <div class="col">
+                    <div class="card-body">
+                        <h5 class="card-title">{{review.title}}</h5>
+                        <p class="card-text">{{review.lead|slice:":256"|safe}}{% if review.lead|length > 256 %}...{% endif %}</p>
+                        <p class="text-muted">Autor: {{review.author.username}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </a>
+        
+        {% endfor %}
+        {% else %}
+
+        <div class="card my-3">
+            <div class="card-body">
+                <h3 class="fs-4">Brak recenzji</h3>
+                <span class="text-muted">Nie dodano jeszcze żadnych recenzji</span>
+            </div>
+        </div>
+        
+        {% endif %}
+
+    </div>
+</section>
+
+<section>
+    <div class="container my-4">
+        <div class="btn-toolbar d-flex justify-content-center">
+            <div class="btn-group mx-3">
+                {% if reviews_objects.has_previous %}
+                    <a href="?page=1" class="btn btn-outline-secondary"><i class="bi bi-chevron-double-left"></i></a>
+                    <a href="?page={{ reviews_objects.previous_page_number }}" class="btn btn-outline-secondary"><i class="bi bi-chevron-left"></i></a>
+                {% endif %}
+            </div>
+                <span class="border rounded border-secondary text-muted p-2">{{news_objects.number}}</span>
+            <div class="btn-group mx-3">
+                {% if news_objects.has_next %}
+                    <a href="?page={{ reviews_objects.next_page_number }}" class="btn btn-outline-secondary"><i class="bi bi-chevron-right"></i></a>
+                    <a href="?page={{ reviews_objects.paginator.num_pages }}" class="btn btn-outline-secondary"><i class="bi bi-chevron-double-right"></i></a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{% include '../footer.html' %}

@@ -1,22 +1,17 @@
-{% include '../head.html' %}
-
 {% autoescape off %}
-<section class="bg-dark text-light">
-    <div class="container-lg my-5 text-center">
+<section>
+    <div>
         <h1>Witaj {{ user.username }}!</h1> 
     </div>
 </section>
 
-<section class="bg-light">
-    <div class="container-lg my-5">
-        <div class="row d-flex justify-content-center">
-            <div class="col-md text-center">
-                <p class="fs-4">Naciśnij przycisk aby aktywować konto GameNet</p>
-                <a href="http://{{ domain }}{% url 'activate' uidb64=uid token=token %}" class="btn btn-lg btn-primary my-5">Aktywuj konto</a>    
+<section>
+    <div>
+        <div>
+            <div>
+                <p>Naciśnij przycisk aby aktywować konto GameNet</p>
+                <a href="http://{{ domain }}{% url 'activate' uidb64=uid token=token %}">Aktywuj konto</a>    
             </div>
         </div>
     </div>
 </section>
-
-{% endautoescape %}
-{% include '../footer.html' %}

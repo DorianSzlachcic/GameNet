@@ -12,7 +12,7 @@
             <img class="image-fluid" style="max-height: 400px; object-fit: cover;" src="{{news.image.url}}" alt="">
             {% endif %}
         </div>
-        <div class="row mx-5" id="newsContent">
+        <div class="row mx-5" id="content">
             {{news.content|safe}}
             <p class="text-end text-muted my-3 fs-4">Autor: {% if news.author %}{{news.author}}{% else %}<span class="text-muted">[Konto usunięte]</span>{% endif %}</p>
         </div>

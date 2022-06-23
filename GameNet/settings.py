@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
+import cloudinary
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -35,6 +36,7 @@ CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000/', 'https://gamenet.herokuapp.com
 INSTALLED_APPS = [
     'games.apps.GamesConfig',
     'news.apps.NewsConfig',
+    'reviews.apps.ReviewsConfig',
     'accounts.apps.AccountsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -43,7 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
-    'ckeditor'
+    'ckeditor',
+    'cloudinary'
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -125,9 +128,9 @@ AUTH_PASSWORD_VALIDATORS = [
 #Confirmation email
 
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = os.environ.get('EMAIL_SMTP_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_SMTP_PASSWORD')
+EMAIL_HOST = 'smtp-mail.outlook.com'
+EMAIL_HOST_USER = os.environ("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ("EMAIL_HOST_PASSWORD")
 EMAIL_PORT = 587
 
 #Media
@@ -158,17 +161,11 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'media'),
 ]
 
-AZURE_ACCOUNT_NAME = os.environ.get('AZURE_ACCOUNT_NAME')
-AZURE_ACCOUNT_KEY = os.environ.get('AZURE_ACCOUNT_KEY')
-AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
-AZURE_LOCATION = 'media'
-AZURE_CONTAINER = 'media'
-
-STATIC_LOCATION = 'media'
-STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
-
-STATICFILES_STORAGE = 'storages.backends.azure_storage.AzureStorage'
-DEFAULT_FILE_STORAGE = 'GameNet.custom_azure.AzureMediaStorage'
+cloudinary.config( 
+  cloud_name = os.environ("cloud_name"), 
+  api_key = os.environ("api_key"), 
+  api_secret = os.environ("api_secret") 
+)
 
 
 # Default primary key field type

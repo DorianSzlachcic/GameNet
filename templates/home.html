@@ -2,6 +2,7 @@
 {% include 'navbar.html' %}
 
     <!--News slider-->
+    {% if news3 %}
     <section class="bg-dark">
         <div class="container-lg p-0">
             <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
@@ -14,7 +15,7 @@
                 <div class="carousel-inner">
                 {% for news in news3 %}
                   <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}">
-                      <a href="#" class="text-reset text-decoration-none">
+                      <a href="{% url 'news' id=news.pk %}" class="text-reset text-decoration-none">
                         {% if news.image %}
                         <img src="{{ news.image.url }}" class="d-block w-100" alt="...">
                         {% else %}
@@ -39,7 +40,7 @@
               </div>
         </div>
     </section>
-
+    {% endif %}
     <!--Top5 section-->
     <section class="my-4" id="top5">
         <div class="container-lg">
@@ -84,22 +85,24 @@
     </section>
 
     <!--Reviews section-->
+    {% if reviews3 %}
     <section>
         <div class="container-lg">
             <h2 class="mb-4">Recenzje</h2>
+            {% for review in reviews3 %}
             <div class="row">
                 <div class="col mb-4">
-                    <a href="#" class="text-reset text-decoration-none">
+                    <a href="{% url 'review' id=review.pk %}" class="text-reset text-decoration-none">
                         <div class="card">
                             <div class="row">
                                 <div class="col-4">
-                                    <img src="https://bigbaddice.pl/wp-content/uploads/2022/03/elden-ring-otwarte-swiaty.jpg" alt="" class="img-fluid rounded-start">
+                                    <img src="{{review.image.url}}" alt="" class="img-fluid rounded-start">
                                 </div>
                                 <div class="col">
                                     <div class="card-body">
-                                        <h5 class="card-title">Świetna recenzja</h5>
-                                        <p class="card-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis numquam delectus earum distinctio incidunt aliquid adipisci repellendus velit ratione maxime ea quod commodi, dolores id, voluptates et necessitatibus asperiores iusto.</p>
-                                        <p class="card-text"><small class="text-muted">Autor: XYZ</small></p>
+                                        <h5 class="card-title">{{review.title}}</h5>
+                                        <p class="card-text">{{review.lead}}</p>
+                                        <p class="card-text"><small class="text-muted">Autor: {{review.author.username}}</small></p>
                                     </div>
                                 </div>
                             </div>
@@ -107,47 +110,11 @@
                     </a>
                 </div>
             </div>
-            <div class="row">
-                <div class="col mb-4">
-                    <a href="#" class="text-reset text-decoration-none">
-                        <div class="card">
-                            <div class="row">
-                                <div class="col-4">
-                                    <img src="https://bigbaddice.pl/wp-content/uploads/2022/03/elden-ring-otwarte-swiaty.jpg" alt="" class="img-fluid rounded-start">
-                                </div>
-                                <div class="col">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Świetna recenzja</h5>
-                                        <p class="card-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis numquam delectus earum distinctio incidunt aliquid adipisci repellendus velit ratione maxime ea quod commodi, dolores id, voluptates et necessitatibus asperiores iusto.</p>
-                                        <p class="card-text"><small class="text-muted">Autor: XYZ</small></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+            {% endfor %}
+            <div class="row text-end m-4 fs-4">
+                <a href="{% url 'reviewsList' %}">Więcej recenzji ></a>
             </div>
-            <div class="row">
-                <div class="col mb-4">
-                    <a href="#" class="text-reset text-decoration-none">
-                        <div class="card">
-                            <div class="row">
-                                <div class="col-4">
-                                    <img src="https://bigbaddice.pl/wp-content/uploads/2022/03/elden-ring-otwarte-swiaty.jpg" alt="" class="img-fluid rounded-start">
-                                </div>
-                                <div class="col">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Świetna recenzja</h5>
-                                        <p class="card-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis numquam delectus earum distinctio incidunt aliquid adipisci repellendus velit ratione maxime ea quod commodi, dolores id, voluptates et necessitatibus asperiores iusto.</p>
-                                        <p class="card-text"><small class="text-muted">Autor: XYZ</small></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
     </section>
+    {% endif %}
 
 {% include 'footer.html' %}

@@ -22,6 +22,7 @@ from babel.dates import format_datetime
 
 from games.models import Rating, Game
 from news.models import News
+from reviews.models import Review
 from .forms import RegisterForm
 from accounts.tokens import TokenGenerator
 
@@ -29,7 +30,8 @@ from accounts.tokens import TokenGenerator
 
 def homePage(request):
 
-    news3 = News.objects.order_by("-edit_date")
+    news3 = News.objects.order_by("-edit_date")[:3]
+    reviews3 = Review.objects.order_by("-edit_date")[:3]
 
     top5 = []
     for game in Game.objects.all():
@@ -43,7 +45,7 @@ def homePage(request):
     while len(top5) < 5:
         top5.append((None,None))
 
-    context = {'top5': top5, 'news3': news3}
+    context = {'top5': top5, 'news3': news3 if news3.count() != 0 else None, 'reviews3': reviews3 if reviews3.count() != 0 else None}
     return render(request, "home.html", context)
 
 

@@ -5,6 +5,7 @@ from babel.dates import format_datetime
 
 from .models import News
 from .forms import NewsForm
+from .decorators import check_if_redactor
 
 # Create your views here.
 
@@ -32,17 +33,21 @@ def news_list(request):
 @login_required
 def your_news(request):
     user = request.user
+    check_if_redactor(user)
+
     user_news = News.objects.filter(author=user).order_by('-edit_date')
 
     last_edited = []
     for last in user_news.values_list("edit_date",flat=True):
         last_edited.append(format_datetime(last, locale="pl_PL"))
 
-    context = {'user_news': zip(user_news, last_edited)}
+    context = {'user_news': zip(user_news, last_edited) if user_news.count() != 0 else None}
     return render(request, "news/your_news.html", context)
 
 @login_required
 def add(request):
+    check_if_redactor(request.user)
+
     form = NewsForm()
 
     if request.method == "POST":
@@ -59,6 +64,8 @@ def add(request):
 
 @login_required
 def edit(request, id):
+    check_if_redactor(request.user)
+
     news = News.objects.get(pk=id)
     form = NewsForm(instance=news)
 
@@ -74,6 +81,8 @@ def edit(request, id):
 
 @login_required
 def delete(request, id):
+    check_if_redactor(request.user)
+
     if request.method == "POST":
         news = News.objects.get(pk=id)
         news.delete()

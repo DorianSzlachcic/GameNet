@@ -22,6 +22,9 @@
                     {% if request.user|has_group:'redactor' or request.user.is_superuser %}
                     <a href="{% url 'yourNews' %}" class="btn btn-primary m-1">Twoje newsy</a>
                     {% endif %}
+                    {% if request.user|has_group:'reviewer' or request.user.is_superuser %}
+                    <a href="{% url 'yourReviews' %}" class="btn btn-primary m-1">Twoje recenzje</a>
+                    {% endif %}
                     <a href="{% url 'logout' %}" class="btn btn-secondary m-1">Wyloguj się</a>
                 {% else %}
                     <a href="{% url 'login' %}" class="btn btn-primary m-1 ms-auto">Zaloguj się</a>

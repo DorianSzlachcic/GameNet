@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
+from cloudinary.models import CloudinaryField
 
 # Create your models here.
 
@@ -9,7 +10,7 @@ class Game(models.Model):
     developer = models.CharField(max_length=128, help_text="Developer")
     description = models.TextField(max_length=1024, help_text="Opis gry")
     release_date = models.DateField(null=True, blank=True, help_text="Data wydania gry")
-    image = models.ImageField(upload_to="uploads/games/", blank=True)
+    image = CloudinaryField("game_image", null=True, blank=True)
     image_link = models.CharField(max_length=512, help_text="Link do zdjęcia", null=True, blank=True)
     trailer = models.CharField(max_length=512, help_text="Link do trailera gry", null=True, blank=True)
 
