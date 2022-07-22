@@ -17,6 +17,7 @@ from django.db.models import Avg
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.db.models import Count
+from GameNet.settings import AUTHENTICATION_BACKENDS
 
 from babel.dates import format_datetime
 
@@ -174,7 +175,7 @@ def activate(request, uidb64, token):
     if user != None and token_generator.check_token(user, token):
         user.is_active = True
         user.save()
-        login(request, user)
+        login(request, user, AUTHENTICATION_BACKENDS[1])
         return redirect('home')
     else:
         messages.error(request,"Nie udało się aktywować konta.",extra_tags="danger")
