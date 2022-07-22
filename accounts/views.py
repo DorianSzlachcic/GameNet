@@ -175,7 +175,7 @@ def activate(request, uidb64, token):
     if user != None and token_generator.check_token(user, token):
         user.is_active = True
         user.save()
-        login(request, user, AUTHENTICATION_BACKENDS[1])
+        login(request, user, AUTHENTICATION_BACKENDS[0])
         return redirect('home')
     else:
         messages.error(request,"Nie udało się aktywować konta.",extra_tags="danger")
