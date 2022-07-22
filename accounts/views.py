@@ -1,6 +1,3 @@
-from multiprocessing import context
-from operator import itemgetter
-import django
 from django.conf import settings
 from django.core.mail import send_mail
 from django.shortcuts import render,redirect
@@ -8,7 +5,6 @@ from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.http import HttpResponse
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
