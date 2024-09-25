@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from games.models import Game
-from ckeditor.fields import RichTextField
+from django_ckeditor_5.fields import CKEditor5Field
 from cloudinary.models import CloudinaryField
 from django.core.validators import MaxValueValidator, MinValueValidator
 
@@ -14,7 +14,7 @@ class Review(models.Model):
     points = models.PositiveSmallIntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(10)])
     lead = models.TextField(max_length=1024, default="Zapowiedź")
     image = CloudinaryField("review_image", null=True, blank=True)
-    content = RichTextField()
+    content = CKEditor5Field()
     summary = models.TextField(max_length=1024, default="Podsumowanie")
     created_date = models.DateTimeField(auto_now_add=True)
     edit_date = models.DateTimeField(auto_now=True)

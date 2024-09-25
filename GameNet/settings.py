@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-2txu9cxrxb(wb3zv*4c5duy=ny%tivpzrw+c1r%ss2e+hdk9_x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1','gamenet.herokuapp.com', '0.0.0.0']
 
@@ -46,23 +46,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
-    'ckeditor',
+    'django_ckeditor_5',
     'cloudinary',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'crispy_bootstrap4',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-CKEDITOR_BASEPATH = "/media/ckeditor/ckeditor/"
-CKEDITOR_CONFIGS = {
-    'default': {
-        'height': 600,
-    },
-}
-
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 
 MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -73,6 +67,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'GameNet.urls'
@@ -102,11 +97,11 @@ WSGI_APPLICATION = 'GameNet.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'd7p7pk114nf7k9',
-        'USER': os.environ.get('DB_USER'),
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USERNAME'),
         'PASSWORD': os.environ.get('DB_PASSWORD'),
-        'HOST': 'ec2-176-34-211-0.eu-west-1.compute.amazonaws.com',
-        'PORT': '5432',
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT'),
     }
 }
 
@@ -200,3 +195,16 @@ cloudinary.config(
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+# Define a constant in settings.py to specify file upload permissions
+CKEDITOR_5_FILE_UPLOAD_PERMISSION = "any"  # Possible values: "staff", "authenticated", "any"
+
+CKEDITOR_5_ALLOW_ALL_FILE_TYPES = True
+CKEDITOR_5_UPLOAD_FILE_TYPES = ['jpeg', 'png', 'gif'] # optional
+CKEDITOR_5_CONFIGS = {
+  'default': {
+      'toolbar': ['heading', '|', 'bold', 'italic', 'link',
+                  'bulletedList', 'numberedList', 'blockQuote', 'imageUpload'],
+      'language': 'pl',
+  },
+}
