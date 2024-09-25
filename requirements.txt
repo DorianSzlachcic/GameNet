@@ -11,3 +11,4 @@ django-allauth
 requests
 jwt
 crispy_bootstrap4
+python-dotenv
