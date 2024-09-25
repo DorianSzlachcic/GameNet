@@ -29,7 +29,8 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1','gamenet.herokuapp.com', '0.0.0.0', 'gamenet-225603244235.europe-north1.run.app']
 
-CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000/', 'https://gamenet.herokuapp.com/', 'http://0.0.0.0:5000/']
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000/', 'https://gamenet.herokuapp.com/',
+                        'http://0.0.0.0:5000/', 'https://gamenet-225603244235.europe-north1.run.app/']
 
 # Application definition
 
