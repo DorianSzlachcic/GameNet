@@ -1,9 +1,12 @@
 # GameNet
-[GameNet](https://gamenet.herokuapp.com/) to serwis internetowy, na którym można znaleźć oceny oraz opnie użytkowników na temat gier komputerowych, newsy z braży gier oraz recenzje krytyków na temat najnowszych premier.
-Serwis przygotowany jest w ramach projektu na studiach.
+[GameNet](https://gamenet-225603244235.europe-north1.run.app/) is a web application, made for course in university. Application is inspired by Filmweb. On GameNet you can rate games (app doesn't use any API so games must be added manually by admin), read reviews and news.
 
-### Użyte technologie
+For testing purpose I've created user with all permissions, so you can try every activity:
+Username: radnow
+Password: swinka123
+
+### Technologies
 - Python 3.10
 - Django 4
 - Bootstrap 5
-- Heroku
+- Google Cloud
