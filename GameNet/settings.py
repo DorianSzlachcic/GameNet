@@ -34,8 +34,8 @@ ALLOWED_HOSTS = ['127.0.0.1', 'gamenet-225603244235.europe-north1.run.app']
 
 CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000/', 'https://gamenet-225603244235.europe-north1.run.app']
 
-SECURE_SSL_REDIRECT = True
-SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+# SECURE_SSL_REDIRECT = True
+# SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # Application definition
 
@@ -206,9 +206,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Define a constant in settings.py to specify file upload permissions
 CKEDITOR_5_FILE_UPLOAD_PERMISSION = "any"  # Possible values: "staff", "authenticated", "any"
-
+CKEDITOR_UPLOAD_PATH = MEDIA_ROOT
 CKEDITOR_5_ALLOW_ALL_FILE_TYPES = True
-CKEDITOR_5_UPLOAD_FILE_TYPES = ['jpeg', 'png', 'gif'] # optional
+CKEDITOR_5_UPLOAD_FILE_TYPES = ['jpg', 'jpeg', 'png', 'gif'] # optional
 CKEDITOR_5_CONFIGS = {
   'default': {
       'toolbar': ['heading', '|', 'bold', 'italic', 'link',

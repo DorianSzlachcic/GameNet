@@ -74,7 +74,7 @@ def edit(request, id):
             form.save()
             return redirect('yourReviews')
 
-    context = {'form': form, 'edit': True}
+    context = {'form': form, 'edit': True, 'id': id}
     return render(request, "reviews/add_edit.html", context)
 
 

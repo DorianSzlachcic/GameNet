@@ -8,9 +8,9 @@
 
 <section>
     <div class="container-lg mt-4">
-        <h2>{% if edit %}Edytuj news{% else %}Dodaj news{% endif %}</h2>
+        <h2>{% if edit %}Edytuj recenzję{% else %}Dodaj recenzję{% endif %}</h2>
         <div class="my-3 mb-4 px-3">
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="{% if edit %}{% url 'editReviews' id %}{% else %}{% url 'addReviews' %}{% endif %}" id="form" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                     <button class="btn btn-primary my-3" type="submit">{% if edit %}Edytuj{% else %}Dodaj{% endif %}</button>
                     <a href="{% url 'yourReviews' %}" class="btn btn-secondary my-3">Anuluj</a>
@@ -57,6 +57,7 @@
 
 <script>
     document.getElementById("id_lead").rows = "5";
+    document.getElementById('form').noValidate = true;
 </script>
 
 {% include '../footer.html' %}
